@@ -28,17 +28,33 @@ glimpse (datos_estaciones)
 1.  ¿Cuántas observaciones de temperatura se hicieron en cada estación?
 
     ```{r}
-
+    datos_estaciones |> 
+      group_by(id) |> 
+      summarise(
+        temp_150cm = sum(!is.na(temperatura_abrigo_150cm)),
+        temp_5cm = sum(!is.na(temperatura_inte_5cm)),
+        temp_10cm_media = sum(!is.na(temperatura_suelo_10cm_media))
+      )
     ```
 
 2.  ¿Cuál es la temperatura mínima registrada y la máxima registrada en cada estación?
 
-    `{r} datos_estaciones |>}   group_by(id) |>       summarise(          temp_minima_absoluta = min(temperatura_abrigo_150cm_minima, na.rm = TRUE),       temp_maxima_absoluta = max(temperatura_abrigo_150cm_maxima, na.rm = TRUE)        )`
+    ```{r}
+    datos_estaciones |>   
+      group_by(id) |>       
+        summarise(          
+          temp_minima_150cm = min(temperatura_abrigo_150cm_minima, na.rm = TRUE),          temp_maxima_150cm = max(temperatura_abrigo_150cm_maxima, na.rm = TRUE),
+          temp_minima_50cm= min(temperatura_intemperie_50cm_minima, na.rm = TRUE),
+          temp_minima_5cm= min(temperatura_inte_5cm, na.rm = TRUE))
+    ```
 
 3.  ¿Cuál es el promedio de la temperatura de abrigo a 150 cm en cada estación? ¿Y el desvío estandar? Pista: la mayoría de las funciones tienen un argumento para sacar los NA del cálculo, revisá la documentación de mean() y de sd().
 
     ```{r}
-
+    datos_estaciones |> 
+      group_by (id) |> 
+      summarise(t_150cm_media= mean(temperatura_abrigo_150cm, , na.rm = TRUE),
+                t_150cm_d_estandar= sd(temperatura_abrigo_150cm, na.rm = TRUE))
     ```
 
 4.  ¿Cuál es la proporción de NA en temperatura de abrigo a 150 cm? Pista: podés calcular la proporción como cantidad de NA dividido la cantidad total de observaciones. La función is.na() devuelve TRUE si el valor es un NA, al mismo tiempo TRUE es igual a 1 (así es como R lo interpreta) por lo que sum(is.na(variable)) te va a dar la cantidad de NA en esa variable.
