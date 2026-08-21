@@ -21,7 +21,7 @@ e437 <- read_csv("datos/crudos/estacion_437.csv")
 e472 <- read_csv("datos/crudos/estacion_472.csv")
 e910 <- read_csv("datos/crudos/estacion_910.csv")
 
-datos_estaciones <- rbind(metadatos, e046, e098, e437, e472, e910)
+datos_estaciones <- rbind(e046, e098, e437, e472, e910)
 glimpse (datos_estaciones)
 ```
 
@@ -33,12 +33,7 @@ glimpse (datos_estaciones)
 
 2.  ¿Cuál es la temperatura mínima registrada y la máxima registrada en cada estación?
 
-    ```{r} datos_estaciones |>}
-      group_by(id) |>    
-      summarise(     
-        temp_minima_absoluta = min(temperatura_abrigo_150cm_minima, na.rm = TRUE),       temp_maxima_absoluta = max(temperatura_abrigo_150cm_maxima, na.rm = TRUE)   
-        )
-    ```
+    `{r} datos_estaciones |>}   group_by(id) |>       summarise(          temp_minima_absoluta = min(temperatura_abrigo_150cm_minima, na.rm = TRUE),       temp_maxima_absoluta = max(temperatura_abrigo_150cm_maxima, na.rm = TRUE)        )`
 
 3.  ¿Cuál es el promedio de la temperatura de abrigo a 150 cm en cada estación? ¿Y el desvío estandar? Pista: la mayoría de las funciones tienen un argumento para sacar los NA del cálculo, revisá la documentación de mean() y de sd().
 
