@@ -53,11 +53,13 @@ glimpse (datos_estaciones)
     ```{r}
     datos_estaciones |> 
       group_by (id) |> 
-      summarise(t_150cm_media= mean(temperatura_abrigo_150cm, , na.rm = TRUE),
+      summarise(t_150cm_media= mean(temperatura_abrigo_150cm, na.rm = TRUE),
                 t_150cm_d_estandar= sd(temperatura_abrigo_150cm, na.rm = TRUE))
     ```
 
 4.  ¿Cuál es la proporción de NA en temperatura de abrigo a 150 cm? Pista: podés calcular la proporción como cantidad de NA dividido la cantidad total de observaciones. La función is.na() devuelve TRUE si el valor es un NA, al mismo tiempo TRUE es igual a 1 (así es como R lo interpreta) por lo que sum(is.na(variable)) te va a dar la cantidad de NA en esa variable.
+
+    Usando mean():
 
     ```{r}
     datos_estaciones |>
@@ -68,6 +70,17 @@ glimpse (datos_estaciones)
       )
 
 
+    ```
+
+    Otra forma usando sum() y dividiendolo por n():
+
+    ```{r}
+    datos_estaciones |>
+      summarise(
+        prop_min = sum(is.na(temperatura_abrigo_150cm_minima))/ n(),
+        prop_max = sum(is.na(temperatura_abrigo_150cm_maxima))/ n(),
+        prop_med = sum(is.na(temperatura_abrigo_150cm))/ n()
+      )
     ```
 
 5.  ¿Cuál es el promedio anual de la temperatura de abrigo a 150 cm en cada estación? Pista, podés extraer el año de la variable fecha con anio = year(fecha) y usar esa nueva variable para agrupar los datos.
@@ -88,6 +101,6 @@ glimpse (datos_estaciones)
       mutate(mes = floor_date(fecha, "month")) |> 
       group_by(id, mes) |> 
       summarise(
-        temp_promedio = mean(temperatura_abrigo_150cm, na.rm = TRUE)
+        precipitacion_acumulada =sum(precipitacion_pluviometrica, na.rm = TRUE)
       )
     ```
