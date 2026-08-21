@@ -1,0 +1,72 @@
+---
+title: "lectura_datos_meteorologicos"
+format: html
+editor: visual
+---
+
+Librerías:
+
+```{r} library (readr)}
+```
+
+METADATOS- descarga y lectura
+
+```{r} metadatos_url <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/metadatos_completos.csv"}
+metadatos_archivo <- "transversales_proII/datos/crudos/metadatos.csv"  download.file (url = metadatos_url, destfile = metadatos_archivo) 
+```
+
+```{r} metadatos <- read_csv (metadatos_archivo)}
+str (metadatos)
+```
+
+DATOS ESTACIÓN NH0472- descarga y lectura
+
+```{r} estacion_472_url <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/NH0472.csv"}
+estacion_472_archivo <- "transversales_proII/datos/crudos/estacion_472.csv"  
+download.file (url = estacion_472_url, destfile = estacion_472_archivo)
+```
+
+```{r} estacion_472 <- read_csv (estacion_472_archivo)}
+str (estacion_472)
+```
+
+DATOS ESTACIÓN NH0910- descarga y lectura
+
+```{r} estacion_910_url <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/NH0910.csv"}
+estacion_910_archivo <- "transversales_proII/datos/crudos/estacion_910.csv"  download.file(url = estacion_910_url, destfile= estacion_910_archivo)
+```
+
+```{r} estacion_910 <- read_csv (estacion_910_archivo)}
+str (estacion_910)
+```
+
+DATOS ESTACIÓN NH0046- descarga y lectura
+
+```{r} estacion_046_url <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/NH0046.csv"}
+estacion_046_archivo <- "transversales_proII/datos/crudos/estacion_046.csv"  download.file(url= estacion_046_url, destfile = estacion_046_archivo)
+```
+
+```{r} estacion_046 <- read_csv (estacion_046_archivo)}
+str (estacion_046)
+```
+
+DATOS ESTACIÓN NH0098- descarga y lectura
+
+```{r} estacion_098_url <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/NH0098.csv"}
+estacion_098_archivo <- "transversales_proII/datos/crudos/estacion_098.csv"  
+download.file(url = estacion_098_url, destfile = estacion_098_archivo)
+```
+
+```{r} estacion_098 <- read_csv (estacion_098_archivo)}
+str (estacion_098)
+```
+
+DATOS ESTACIÓN NH0437- descarga y lectura
+
+```{r} estacion_437_url <- "https://raw.githubusercontent.com/rse-r/intro-programacion/main/datos/NH0437.csv"}
+estacion_437_archivo <- "transversales_proII/datos/crudos/estacion_437.csv"  download.file (url= estacion_437_url, destfile = estacion_437_archivo)
+```
+
+```{r} estacion_437 <- read_csv (estacion_437_archivo)}
+str (estacion_437)
+```
