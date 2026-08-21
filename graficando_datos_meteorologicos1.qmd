@@ -1,0 +1,31 @@
+---
+title: "graficando_datos_meteorologicos1"
+format: html
+editor: visual
+---
+
+```{r}
+library (readr)
+library (dplyr)
+library (tidyverse)
+library (lubridate)
+library (ggplot2)
+```
+
+```{r}
+metadatos <- read_csv("datos/crudos/metadatos.csv")
+e046 <- read_csv("datos/crudos/estacion_046.csv")
+e098 <- read_csv("datos/crudos/estacion_098.csv")
+e437 <- read_csv("datos/crudos/estacion_437.csv")
+e472 <- read_csv("datos/crudos/estacion_472.csv")
+e910 <- read_csv("datos/crudos/estacion_910.csv")
+
+datos_estaciones <- rbind(e046, e098, e437, e472, e910)
+glimpse (datos_estaciones)
+```
+
+1.  Graficá la temperatura de abrico para la estación NH0437 (tendrías que filtrar los datos para quedarte solo con esta estación). Sumá una regresión linea, ¿se mentiene constante la temperatura media con el tiempo o cambia?
+
+```{r}
+
+```
