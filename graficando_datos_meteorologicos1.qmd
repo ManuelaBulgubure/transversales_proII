@@ -32,10 +32,13 @@ glimpse (estacion_437)
 ```{r}
 ggplot(data = estacion_437, 
        mapping = aes(x = temperatura_abrigo_150cm, 
-                     y = year(fecha)) +
+                     y = year(fecha))) +
   geom_point(aes(colour = "red")) +
   geom_smooth (method= "lm", colour = "black") +
   labs (title= "Temperatura de la Estación NH0437 en función del tiempo",
-        x= "Temperatura abrigo (°C)",
-        y= "Tiempo (años)")
+        x= "Temperatura abrigo en °C",
+        y= "Tiempo")
 ```
+
+2.  Calculá el promedio mensual de la temperatura de abrigo para cada estación y gráfica el resultado. 
+3.  ¿Cuál es la relación entre la temperatura de abrigo y la humedad? Hacé un gráfico de puntos que muestre la relación, podés sumar un suavisado (opcional). Para la humedad utilizá la varable `humedad_media_8_14_20`.
