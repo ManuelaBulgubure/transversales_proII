@@ -14,12 +14,12 @@ library(lubridate)
 ```
 
 ```{r}
-metadatos <- read_csv("transversales_proII/datos/crudos/metadatos.csv")
-e046 <- read_csv("transversales_proII/datos/crudos/estacion_046.csv")
-e098 <- read_csv("transversales_proII/datos/crudos/estacion_098.csv")
-e437 <- read_csv("transversales_proII/datos/crudos/estacion_437.csv")
-e472 <- read_csv("transversales_proII/datos/crudos/estacion_472.csv")
-e910 <- read_csv("transversales_proII/datos/crudos/estacion_910.csv")
+metadatos <- read_csv("datos/crudos/metadatos.csv")
+e046 <- read_csv("datos/crudos/estacion_046.csv")
+e098 <- read_csv("datos/crudos/estacion_098.csv")
+e437 <- read_csv("datos/crudos/estacion_437.csv")
+e472 <- read_csv("datos/crudos/estacion_472.csv")
+e910 <- read_csv("datos/crudos/estacion_910.csv")
 
 datos_estaciones <- rbind(metadatos, e046, e098, e437, e472, e910)
 glimpse (datos_estaciones)
