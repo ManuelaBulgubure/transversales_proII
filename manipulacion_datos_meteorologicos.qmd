@@ -60,6 +60,13 @@ glimpse (datos_estaciones)
 4.  ¿Cuál es la proporción de NA en temperatura de abrigo a 150 cm? Pista: podés calcular la proporción como cantidad de NA dividido la cantidad total de observaciones. La función is.na() devuelve TRUE si el valor es un NA, al mismo tiempo TRUE es igual a 1 (así es como R lo interpreta) por lo que sum(is.na(variable)) te va a dar la cantidad de NA en esa variable.
 
     ```{r}
+    datos_estaciones |>
+      summarise(
+        prop_min = mean(is.na(temperatura_abrigo_150cm_minima)),
+        prop_max = mean(is.na(temperatura_abrigo_150cm_maxima)),
+        prop_med = mean(is.na(temperatura_abrigo_150cm))
+      )
+
 
     ```
 
