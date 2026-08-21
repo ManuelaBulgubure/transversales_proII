@@ -5,8 +5,6 @@ editor: visual
 ---
 
 ```{r}
-library (readr)
-library (dplyr)
 library (tidyverse)
 library (lubridate)
 ```
@@ -23,8 +21,21 @@ datos_estaciones <- rbind(e046, e098, e437, e472, e910)
 glimpse (datos_estaciones)
 ```
 
-1.  Graficá la temperatura de abrico para la estación NH0437 (tendrías que filtrar los datos para quedarte solo con esta estación). Sumá una regresión linea, ¿se mentiene constante la temperatura media con el tiempo o cambia?
+1.  Graficá la temperatura de abrigo para la estación NH0437 (tendrías que filtrar los datos para quedarte solo con esta estación). Sumá una regresión linea, ¿se mentiene constante la temperatura media con el tiempo o cambia?
 
 ```{r}
+estacion_437 <- filter(datos_estaciones, id == "NH0437" &
+                         !is.na(temperatura_abrigo_150cm))
+glimpse (estacion_437)
+```
 
+```{r}
+ggplot(data = estacion_437, 
+       mapping = aes(x = temperatura_abrigo_150cm, 
+                     y = year(fecha)) +
+  geom_point(aes(colour = "red")) +
+  geom_smooth (method= "lm", colour = "black") +
+  labs (title= "Temperatura de la Estación NH0437 en función del tiempo",
+        x= "Temperatura abrigo (°C)",
+        y= "Tiempo (años)")
 ```
