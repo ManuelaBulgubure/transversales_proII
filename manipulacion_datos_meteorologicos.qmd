@@ -7,8 +7,6 @@ editor: visual
 Librerías:
 
 ```{r}
-library (readr)
-library (dplyr)
 library (tidyverse)
 library(lubridate)
 ```

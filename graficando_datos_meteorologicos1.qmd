@@ -9,7 +9,6 @@ library (readr)
 library (dplyr)
 library (tidyverse)
 library (lubridate)
-library (ggplot2)
 ```
 
 ```{r}
