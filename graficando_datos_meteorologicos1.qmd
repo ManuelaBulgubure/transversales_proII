@@ -25,7 +25,7 @@ glimpse (datos_estaciones)
 
 ```{r}
 estacion_437 <- filter(datos_estaciones, id == "NH0437" &
-                         !is.na(temperatura_abrigo_150cm))
+                         temperatura_abrigo_150cm)
 glimpse (estacion_437)
 ```
 
