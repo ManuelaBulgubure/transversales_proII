@@ -1,0 +1,90 @@
+---
+title: "manipulacion_datos_meteorologicos2"
+format: html
+editor: visual
+---
+
+Librerías necesarias:
+
+```{r}
+library (tidyverse)
+library(lubridate)
+```
+
+Lectura de datos
+
+```{r}
+metadatos <- read_csv("datos/crudos/metadatos.csv")
+e046 <- read_csv("datos/crudos/estacion_046.csv")
+e098 <- read_csv("datos/crudos/estacion_098.csv")
+e437 <- read_csv("datos/crudos/estacion_437.csv")
+e472 <- read_csv("datos/crudos/estacion_472.csv")
+e910 <- read_csv("datos/crudos/estacion_910.csv")
+
+datos_estaciones <- rbind(e046, e098, e437, e472, e910)
+```
+
+```{r}
+datos_estaciones |> 
+  group_by (id) |> 
+  mutate(t_150cm_media= mean(temperatura_abrigo_150cm, na.rm = TRUE),
+            t_150cm_d_estandar= sd(temperatura_abrigo_150cm, na.rm = TRUE))
+```
+
+1.  Usando las funciones `pivot_` alargá el resultado anterior de tal manera que queden los valores de temperatura máxima y mínima en la misma columna.
+
+    ```{r}
+    datos_estaciones_largos <- datos_estaciones |> 
+      pivot_longer(cols = c(temperatura_abrigo_150cm_minima, temperatura_abrigo_150cm_maxima),
+                   names_to = "temp_min_o_max",
+                   values_to = "valores")
+
+    ```
+
+2.  A continuación **usando el resultado anterior** volvé a ensanchar la tabla de tal manera que tengas columnas con los nombres de las estaciones y en las filas los valores de la media y el desvio estandar
+
+```{r}
+datos_estaciones_anchos <- datos_estaciones_largos |> 
+  pivot_wider (names_from = "temp_min_o_max",
+               values_from = "valores")
+```
+
+### Uniones
+
+Identifica cuales son las variables clave, aquellas que son comunes entre los datos meteorológicos con los que venís trabajando y esta nueva tabla.
+
+```{r}
+str(metadatos)
+```
+
+```{r}
+str (datos_estaciones)
+```
+
+La variable que se repite en ambos dataframes es ID, por lo que la tomamos como PK (primary key) y haremos el join en función de ella (by = "id").
+
+El join "más conveniente" dependerá de cuál es el propósito de nuestro análisis, de los datos nos interese manejar, y cuáles son las conclusiones que queremos extrapolar.
+
+El inner_join() nos permite intersecar ambos datasets y construir la tabla según los IDs que ambas comparten (estaciones). Entonces, nos permite hacer comparaciones más "compactas" y trabajando con menos valores, lo que podría ser conveniente si nos interesa que cada observación tenga mayor cantidad de variables posibles.
+
+```{r}
+inner_meteorologicos <- inner_join (datos_estaciones, metadatos, by = "id")
+```
+
+Con el full_join() obtenemos un dataset que combina todas las variables y casos de los dos dataframes que nos interesa estudiar. Se trabajaría con un volumen mucho mayor de datos y también de valores faltantes, por lo que habría que evaluar cómo manejarlos.
+
+```{r}
+all_meteorologicos <- full_join (datos_estaciones, metadatos, by = "id")
+```
+
+Tanto en right_join() como en left_join() se toman todos los datos de un dataset y se le "agregan" los datos del otro dataset que tienen en común.
+
+```{r}
+right_meteorologicos <- right_join (datos_estaciones, metadatos, by = "id")
+```
+
+En este caso estaríamos estudiando los casos de datos_estaciones() (que también están en metadatos) sumandoles las variables que están en metadatos.
+
+```{r}
+left_meteorologicos <- left_join (datos_estaciones, metadatos, by = "id")
+```
