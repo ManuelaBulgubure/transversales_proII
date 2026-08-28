@@ -65,13 +65,13 @@ La variable que se repite en ambos dataframes es ID, por lo que la tomamos como 
 
 El join "más conveniente" dependerá de cuál es el propósito de nuestro análisis, de los datos nos interese manejar, y cuáles son las conclusiones que queremos extrapolar.
 
-El inner_join() nos permite intersecar ambos datasets y construir la tabla según los IDs que ambas comparten (estaciones). Entonces, nos permite hacer comparaciones más "compactas" y trabajando con menos valores, lo que podría ser conveniente si nos interesa que cada observación tenga mayor cantidad de variables posibles.
+El **inner_join()** nos permite intersecar ambos datasets y construir la tabla según los IDs que ambas comparten (estaciones). Entonces, nos permite hacer comparaciones más "compactas" y trabajando con menos valores, lo que podría ser conveniente si nos interesa que cada observación tenga mayor cantidad de variables posibles.
 
 ```{r}
 inner_meteorologicos <- inner_join (datos_estaciones, metadatos, by = "id")
 ```
 
-Con el full_join() obtenemos un dataset que combina todas las variables y casos de los dos dataframes que nos interesa estudiar. Se trabajaría con un volumen mucho mayor de datos y también de valores faltantes, por lo que habría que evaluar cómo manejarlos.
+Con el **full_join()** obtenemos un dataset que combina todas las variables y casos de los dos dataframes que nos interesa estudiar. Se trabajaría con un volumen mucho mayor de datos y también de valores faltantes, por lo que habría que evaluar cómo manejarlos.
 
 ```{r}
 all_meteorologicos <- full_join (datos_estaciones, metadatos, by = "id")
@@ -79,12 +79,16 @@ all_meteorologicos <- full_join (datos_estaciones, metadatos, by = "id")
 
 Tanto en right_join() como en left_join() se toman todos los datos de un dataset y se le "agregan" los datos del otro dataset que tienen en común.
 
+Para **right_join**(datos_estaciones, metadatos, by = "id"): Conserva todas las estaciones (IDs) de metadatos (la tabla de la derecha), sumándoles las mediciones de datos_estaciones. Para aquellas estaciones que no tienen mediciones registradas, genera filas con valores NA (dando un total de **95.934 filas**).
+
 ```{r}
 right_meteorologicos <- right_join (datos_estaciones, metadatos, by = "id")
 ```
 
-En este caso estaríamos estudiando los casos de datos_estaciones() (que también están en metadatos) sumandoles las variables que están en metadatos.
+Para **left_join**(datos_estaciones, metadatos, by = "id"): Conserva únicamente los registros de `datos_estaciones` (la tabla de la izquierda), pegándole la información geográfica/meta de `metadatos`. Descarta las estaciones de metadatos que no tienen mediciones (dando un total de **95.681 filas**).
 
 ```{r}
 left_meteorologicos <- left_join (datos_estaciones, metadatos, by = "id")
 ```
+
+Consideramos que **inner_join()** es la alternativa más conveniente puesto que como se queda únicamente con las estaciones que tienen **tanto** metadatos como registros de mediciones, evitan cargar filas llenas de NA (o al menos, los menos NA posibles). Así, cada fila del dataset resultante contiene la mayor cantidad de información posible con los datos disponibles en los datasets originales.
