@@ -25,18 +25,18 @@ datos_estaciones <- rbind(e046, e098, e437, e472, e910)
 ```
 
 ```{r}
-datos_estaciones |> 
+resumen_estaciones <- datos_estaciones |> 
   group_by (id) |> 
-  mutate(t_150cm_media= mean(temperatura_abrigo_150cm, na.rm = TRUE),
+  summarise(t_150cm_media= mean(temperatura_abrigo_150cm, na.rm = TRUE),
             t_150cm_d_estandar= sd(temperatura_abrigo_150cm, na.rm = TRUE))
 ```
 
-1.  Usando las funciones `pivot_` alargá el resultado anterior de tal manera que queden los valores de temperatura máxima y mínima en la misma columna.
+1.  Usando las funciones `pivot_` alargá el resultado anterior de tal manera que queden los valores de temperatura media y desv estandar en la misma columna.
 
     ```{r}
-    datos_estaciones_largos <- datos_estaciones |> 
-      pivot_longer(cols = c(temperatura_abrigo_150cm_minima, temperatura_abrigo_150cm_maxima),
-                   names_to = "temp_min_o_max",
+    datos_estaciones_largos <- resumen_estaciones |> 
+      pivot_longer(cols = c(t_150cm_media, t_150cm_d_estandar),
+                   names_to = "temp_med_o_desv",
                    values_to = "valores")
 
     ```
