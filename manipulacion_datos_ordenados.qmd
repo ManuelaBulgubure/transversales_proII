@@ -45,7 +45,7 @@ resumen_estaciones <- datos_estaciones |>
 
 ```{r}
 datos_estaciones_anchos <- datos_estaciones_largos |> 
-  pivot_wider (names_from = "temp_min_o_max",
+  pivot_wider (names_from = "temp_med_o_desv",
                values_from = "valores")
 ```
 
