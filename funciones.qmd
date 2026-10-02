@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-1. Crea una función para descargar y leer los datos de estaciones.
+1.  Crea una función para descargar y leer los datos de estaciones.
 
 ```{r}
 lectura_datos <- function(id, ruta){
@@ -20,7 +20,7 @@ lectura_datos <- function(id, ruta){
 }
 ```
 
-2. Crea una función que se llame tabla_resumen_temperatura y que devuelva una tabla de resumen de la temperatura_abrigo_150cm para una o más estaciones. 
+2.  Crea una función que se llame tabla_resumen_temperatura y que devuelva una tabla de resumen de la temperatura_abrigo_150cm para una o más estaciones.
 
 ```{r}
 tabla_resumen_temperatura <- function(datos){
@@ -35,4 +35,42 @@ tabla_resumen_temperatura <- function(datos){
 }
 ```
 
+3.  Generá una función `grafico_temperatura_mensual` que devuelva un gráfico que muestre el promedio mensual de la temperatura de abrigo. usá el código que generaste para el ejercicio 2 de ggplot2. La función debe:
 
+    - Recibir el data.frame con los datos (que pueden ser de 1 o más estaciones).
+
+    - Tener un argumento para indicarle que colores debe usar para el gráfico.
+
+    - Tener un argumento para definir el título del gráfico. Por defecto, si no se define el título deberá aparecer “Temperatura”
+
+    Modificá la función para que si no le pasas los colores necesarios, elija colores de manera aleatoria. Pista: revisá [`colors()`](https://rdrr.io/r/grDevices/colors.html)
+
+```{r}
+grafico_temperatura_mensual <- function(data_frame, colores = NULL, titulo = "Temperatura") {
+  
+  promedio_temp <- data_frame |> 
+    mutate(mes = month(fecha)) |> 
+    group_by(id, mes) |> 
+    summarise(
+      prom_temp = mean(temperatura_abrigo_150cm, na.rm = TRUE),
+      .groups = "drop"
+    )
+  
+  # Si no se pasan colores (o faltan), se eligen aleatoriamente de colors()
+  n_id <- n_distinct(promedio_temp$id)
+  if (is.null(colores) || length(colores) < n_id) {
+    colores <- sample(colors(), n_id)
+  }
+  
+  ggplot(data = promedio_temp, mapping = aes(x = mes, y = prom_temp, color = as.character(id))) +
+#el as.character(id) le indica a ggplot2 que id es una categoría y no una medición numérica. Permite que scale_color_manual(values = colores) asigne un color individual y distinto a cada estación.
+    geom_line() +
+    scale_color_manual(values = colores) +
+    labs(
+      title = titulo,
+      x = "Mes",
+      y = "Promedio temperatura (°C)",
+      color = "Estación"
+    )
+}
+```
